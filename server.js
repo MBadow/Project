@@ -1,7 +1,11 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 const express = require('express')
 const app = express()
 const server = require('http').Server(app)
 const io = require('socket.io')(server)
+// const mango = require('mango')
 
 app.set('views', './views')
 app.set('view engine', 'ejs')
@@ -58,9 +62,11 @@ function getUserRooms(socket) {
     return names
   }, [])
 }
+
 const mongoose = require('mongoose')
 
-mongoose.connect(process.env.DATA_BASE, { useNewUrlParser: true })
+// mongoose.connect(process.env.DATA_BASE, { useNewUrlParser: true })
+mongoose.connect(process.env.DATA_BASE1, {useNewUrlParser: true, useUnifiedTopology: true});
 const db = mongoose.connection
 db.on('error', error => console.error(error))
 db.once('open', () => console.log('Connected to Mongoose'))
