@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const server = require('http').Server(app)
 const io = require('socket.io')(server)
- 
+
 app.set('views', './views')
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
@@ -58,3 +58,9 @@ function getUserRooms(socket) {
     return names
   }, [])
 }
+const mongoose = require('mongoose')
+
+mongoose.connect(process.env.DATA_BASE, { useNewUrlParser: true })
+const db = mongoose.connection
+db.on('error', error => console.error(error))
+db.once('open', () => console.log('Connected to Mongoose'))
